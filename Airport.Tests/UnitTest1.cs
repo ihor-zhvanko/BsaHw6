@@ -1,18 +1,20 @@
+using System;
 using NUnit.Framework;
 
 namespace Tests
 {
-    public class Tests
+  public class Tests
+  {
+    [SetUp]
+    public void Setup()
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
     }
+
+    [Test]
+    [TestCase(10)]
+    public void Test1(int value)
+    {
+      Assert.That(value, Is.EqualTo(value));
+    }
+  }
 }
