@@ -1,8 +1,8 @@
 using System;
 
-namespace Airport.BusinessLogic.Models
+namespace Airport.Common.DTOs
 {
-  public class PlaneModel
+  public class PlaneDTO
   {
     public int Id { get; set; }
     public string Name { get; set; }

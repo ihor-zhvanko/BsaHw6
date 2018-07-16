@@ -4,8 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-using Airport.Common.Exceptions;
-
 using Airport.Data.MockData;
 using Airport.Data.Models;
 using Airport.Data.DatabaseContext;

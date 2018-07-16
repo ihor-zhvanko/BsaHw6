@@ -1,24 +1,23 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Airport.BusinessLogic.Models;
+using AutoMapper;
 
 using Airport.Common.Exceptions;
+using Airport.Common.DTOs;
 
 using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
 
-using AutoMapper;
-
 namespace Airport.BusinessLogic.Services
 {
-  public interface ITicketService : IService<TicketModel>
+  public interface ITicketService : IService<TicketDTO>
   {
-    IList<TicketDetails> GetAllDetails();
-    TicketDetails GetDetails(int id);
+    IList<TicketDetailsDTO> GetAllDetails();
+    TicketDetailsDTO GetDetails(int id);
   }
 
-  public class TicketService : BaseService<TicketModel, Ticket>, ITicketService
+  public class TicketService : BaseService<TicketDTO, Ticket>, ITicketService
   {
     IFlightService _flightService;
     public TicketService(
@@ -30,13 +29,13 @@ namespace Airport.BusinessLogic.Services
       _flightService = flightService;
     }
 
-    public IList<TicketDetails> GetAllDetails()
+    public IList<TicketDetailsDTO> GetAllDetails()
     {
       var tickets = _unitOfWork.Set<Ticket>().Details();
-      return tickets.Select(TicketDetails.Create).ToList();
+      return tickets.Select(TicketDetailsDTO.Create).ToList();
     }
 
-    public TicketDetails GetDetails(int id)
+    public TicketDetailsDTO GetDetails(int id)
     {
       var ticket = _unitOfWork.Set<Ticket>()
         .Details(x => x.Id == id).FirstOrDefault();
@@ -44,7 +43,7 @@ namespace Airport.BusinessLogic.Services
       if (ticket == null)
         throw new NotFoundException("Ticket with such id was not found");
 
-      return TicketDetails.Create(ticket);
+      return TicketDetailsDTO.Create(ticket);
     }
   }
 }

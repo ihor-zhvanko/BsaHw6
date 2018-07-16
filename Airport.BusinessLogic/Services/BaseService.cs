@@ -8,7 +8,7 @@ using Airport.Common.Exceptions;
 
 namespace Airport.BusinessLogic.Services
 {
-  public class BaseService<TModel, TEntity> : IService<TModel> where TEntity : Entity
+  public class BaseService<TDTO, TEntity> : IService<TDTO> where TEntity : Entity
   {
     protected IUnitOfWork _unitOfWork;
 
@@ -17,16 +17,16 @@ namespace Airport.BusinessLogic.Services
       _unitOfWork = unitOfWork;
     }
 
-    public TModel Create(TModel model)
+    public TDTO Create(TDTO model)
     {
       var entity = Mapper.Map<TEntity>(model);
       entity = _unitOfWork.Set<TEntity>().Create(entity);
       _unitOfWork.SaveChanges();
 
-      return Mapper.Map<TModel>(entity);
+      return Mapper.Map<TDTO>(entity);
     }
 
-    public virtual void Delete(TModel model)
+    public virtual void Delete(TDTO model)
     {
       var entity = Mapper.Map<TEntity>(model);
       _unitOfWork.Set<TEntity>().Delete(entity);
@@ -39,28 +39,28 @@ namespace Airport.BusinessLogic.Services
       _unitOfWork.SaveChanges();
     }
 
-    public virtual IList<TModel> GetAll()
+    public virtual IList<TDTO> GetAll()
     {
       var entities = _unitOfWork.Set<TEntity>().Get();
-      return Mapper.Map<IList<TModel>>(entities);
+      return Mapper.Map<IList<TDTO>>(entities);
     }
 
-    public virtual TModel GetById(int id)
+    public virtual TDTO GetById(int id)
     {
       var entity = _unitOfWork.Set<TEntity>().Get(id);
       if (entity == null)
         throw new NotFoundException(typeof(TEntity).Name + " with such id was not found");
 
-      return Mapper.Map<TModel>(entity);
+      return Mapper.Map<TDTO>(entity);
     }
 
-    public virtual TModel Update(TModel model)
+    public virtual TDTO Update(TDTO model)
     {
       var entity = Mapper.Map<TEntity>(model);
       entity = _unitOfWork.Set<TEntity>().Update(entity);
       _unitOfWork.SaveChanges();
 
-      return Mapper.Map<TModel>(entity);
+      return Mapper.Map<TDTO>(entity);
     }
   }
 }

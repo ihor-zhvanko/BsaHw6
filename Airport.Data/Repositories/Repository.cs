@@ -4,8 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-using Airport.Common.Exceptions;
-
 using Airport.Data.MockData;
 using Airport.Data.Models;
 
@@ -54,8 +52,6 @@ namespace Airport.Data.Repositories
     public virtual TEntity Get(int id)
     {
       var result = _dbContext.Set<TEntity>().FirstOrDefault(x => x.Id == id);
-      if (result == null)
-        throw new NotFoundException(typeof(TEntity).Name + " with such id was not found");
       return result;
     }
 

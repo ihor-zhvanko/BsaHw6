@@ -1,14 +1,13 @@
 using System;
 
-namespace Airport.BusinessLogic.Models
+namespace Airport.Common.DTOs
 {
-  public class PilotModel
+  public class AirhostessDTO
   {
     public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime BirthDate { get; set; }
-    public double Experience { get; set; }
-
+    public int CrewId { get; set; }
   }
 }

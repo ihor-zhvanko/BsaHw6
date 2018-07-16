@@ -1,24 +1,24 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Airport.BusinessLogic.Models;
+
+using AutoMapper;
 
 using Airport.Common.Exceptions;
+using Airport.Common.DTOs;
 
 using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
 
-using AutoMapper;
-
 namespace Airport.BusinessLogic.Services
 {
-  public interface IPlaneService : IService<PlaneModel>
+  public interface IPlaneService : IService<PlaneDTO>
   {
-    IList<PlaneDetails> GetAllDetails();
-    PlaneDetails GetDetails(int id);
+    IList<PlaneDetailsDTO> GetAllDetails();
+    PlaneDetailsDTO GetDetails(int id);
   }
 
-  public class PlaneService : BaseService<PlaneModel, Plane>, IPlaneService
+  public class PlaneService : BaseService<PlaneDTO, Plane>, IPlaneService
   {
     IPlaneTypeService _planeTypeService;
     public PlaneService(
@@ -30,13 +30,13 @@ namespace Airport.BusinessLogic.Services
       _planeTypeService = planeTypeService;
     }
 
-    public IList<PlaneDetails> GetAllDetails()
+    public IList<PlaneDetailsDTO> GetAllDetails()
     {
       var planes = _unitOfWork.Set<Plane>().Details();
-      return planes.Select(PlaneDetails.Create).ToList();
+      return planes.Select(PlaneDetailsDTO.Create).ToList();
     }
 
-    public PlaneDetails GetDetails(int id)
+    public PlaneDetailsDTO GetDetails(int id)
     {
       var plane = _unitOfWork.Set<Plane>()
         .Details(x => x.Id == id).FirstOrDefault();
@@ -44,7 +44,7 @@ namespace Airport.BusinessLogic.Services
       if (plane == null)
         throw new NotFoundException("Plane with such id was not found");
 
-      return PlaneDetails.Create(plane);
+      return PlaneDetailsDTO.Create(plane);
     }
   }
 }

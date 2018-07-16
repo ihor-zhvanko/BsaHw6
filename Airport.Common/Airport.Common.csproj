@@ -9,4 +9,8 @@
     <PackageReference Include="FluentValidation" Version="7.6.104" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Airport.Data\Airport.Data.csproj" />
+  </ItemGroup>
+
 </Project>

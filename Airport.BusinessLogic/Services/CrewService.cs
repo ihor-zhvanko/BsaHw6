@@ -1,24 +1,24 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Airport.BusinessLogic.Models;
 
+using AutoMapper;
+
+using Airport.Common.DTOs;
 using Airport.Common.Exceptions;
 
 using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
 
-using AutoMapper;
-
 namespace Airport.BusinessLogic.Services
 {
-  public interface ICrewService : IService<CrewModel>
+  public interface ICrewService : IService<CrewDTO>
   {
-    IList<CrewDetails> GetAllDetails();
-    CrewDetails GetDetails(int id);
+    IList<CrewDetailsDTO> GetAllDetails();
+    CrewDetailsDTO GetDetails(int id);
   }
 
-  public class CrewService : BaseService<CrewModel, Crew>, ICrewService
+  public class CrewService : BaseService<CrewDTO, Crew>, ICrewService
   {
     IPilotService _pilotService;
     IAirhostessService _airhostessService;
@@ -34,13 +34,13 @@ namespace Airport.BusinessLogic.Services
       this._airhostessService = airhostessService;
     }
 
-    public IList<CrewDetails> GetAllDetails()
+    public IList<CrewDetailsDTO> GetAllDetails()
     {
       var crews = _unitOfWork.Set<Crew>().Details();
-      return crews.Select(CrewDetails.Create).ToList();
+      return crews.Select(CrewDetailsDTO.Create).ToList();
     }
 
-    public CrewDetails GetDetails(int id)
+    public CrewDetailsDTO GetDetails(int id)
     {
       var crew = _unitOfWork.Set<Crew>()
         .Details(x => x.Id == id).FirstOrDefault();
@@ -49,7 +49,7 @@ namespace Airport.BusinessLogic.Services
       {
         throw new NotFoundException("Crew with such id was not found");
       }
-      return CrewDetails.Create(crew);
+      return CrewDetailsDTO.Create(crew);
     }
   }
 }

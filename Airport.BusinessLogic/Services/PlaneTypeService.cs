@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Airport.BusinessLogic.Models;
+using AutoMapper;
+
+using Airport.Common.DTOs;
 
 using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
 
-using AutoMapper;
-
 namespace Airport.BusinessLogic.Services
 {
-  public interface IPlaneTypeService : IService<PlaneTypeModel>
+  public interface IPlaneTypeService : IService<PlaneTypeDTO>
   { }
 
-  public class PlaneTypeService : BaseService<PlaneTypeModel, PlaneType>, IPlaneTypeService
+  public class PlaneTypeService : BaseService<PlaneTypeDTO, PlaneType>, IPlaneTypeService
   {
     public PlaneTypeService(IUnitOfWork unitOfWork)
       : base(unitOfWork)

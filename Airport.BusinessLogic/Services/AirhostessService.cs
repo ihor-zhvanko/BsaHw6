@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Airport.BusinessLogic.Models;
+
+using Airport.Common.DTOs;
 
 using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
@@ -10,23 +11,23 @@ using AutoMapper;
 
 namespace Airport.BusinessLogic.Services
 {
-  public interface IAirhostessService : IService<AirhostessModel>
+  public interface IAirhostessService : IService<AirhostessDTO>
   {
-    IList<AirhostessModel> GetByCrewId(int crewId);
+    IList<AirhostessDTO> GetByCrewId(int crewId);
     void AssignToCrew(IList<int> airhostessIds, int crewId);
   }
 
-  public class AirhostessService : BaseService<AirhostessModel, Airhostess>, IAirhostessService
+  public class AirhostessService : BaseService<AirhostessDTO, Airhostess>, IAirhostessService
   {
     public AirhostessService(IUnitOfWork unitOfWork)
       : base(unitOfWork)
     { }
 
-    public IList<AirhostessModel> GetByCrewId(int crewId)
+    public IList<AirhostessDTO> GetByCrewId(int crewId)
     {
       var airhostesses = _unitOfWork.Set<Airhostess>().Get((x) => x.CrewId == crewId);
 
-      return Mapper.Map<IList<AirhostessModel>>(airhostesses);
+      return Mapper.Map<IList<AirhostessDTO>>(airhostesses);
     }
 
     public void AssignToCrew(IList<int> airhostessIds, int crewId)
