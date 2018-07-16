@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     [DbContext(typeof(AirportDbContext))]
     [Migration("20180715082908_InitialCreate")]

@@ -4,16 +4,14 @@ using Airport.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     [DbContext(typeof(AirportDbContext))]
-    [Migration("20180715092312_AddedDataAnnotations")]
-    partial class AddedDataAnnotations
+    partial class AirportDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +30,11 @@ namespace Airport.Api.Migrations
                     b.Property<int?>("CrewId");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.HasKey("Id");
@@ -90,19 +90,25 @@ namespace Airport.Api.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ArrivalPlace")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.Property<DateTime>("ArrivalTime");
 
                     b.Property<string>("DeparturePlace")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.Property<DateTime>("DepartureTime");
 
                     b.Property<string>("Number")
+                        .IsRequired()
                         .HasMaxLength(6);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
 
                     b.ToTable("Flight");
                 });
@@ -118,9 +124,11 @@ namespace Airport.Api.Migrations
                     b.Property<double>("Experience");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(32);
 
                     b.HasKey("Id");
@@ -134,13 +142,14 @@ namespace Airport.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("PlaneTypeId");
 
                     b.Property<DateTime>("ReleaseDate");
 
-                    b.Property<TimeSpan>("ServiceLife");
+                    b.Property<long>("ServiceLifeDays");
 
                     b.HasKey("Id");
 
@@ -157,11 +166,15 @@ namespace Airport.Api.Migrations
 
                     b.Property<double>("Carrying");
 
-                    b.Property<string>("Model");
+                    b.Property<string>("Model")
+                        .IsRequired();
 
                     b.Property<int>("Seats");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Model")
+                        .IsUnique();
 
                     b.ToTable("PlaneType");
                 });

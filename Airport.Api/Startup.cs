@@ -46,7 +46,7 @@ namespace Airport.Api
 
       string connection = Configuration.GetConnectionString("DefaultConnection");
       services.AddDbContext<AirportDbContext>(options =>
-        options.UseSqlServer(connection, b => b.MigrationsAssembly("Airport.Api"))
+        options.UseSqlServer(connection, b => b.MigrationsAssembly("Airport.Data"))
       , ServiceLifetime.Transient);
 
       services.AddTransient<AirportInitializer>();

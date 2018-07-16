@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     public partial class AddedRequiredAnnotations : Migration
     {

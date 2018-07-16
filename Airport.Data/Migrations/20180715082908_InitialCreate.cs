@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {

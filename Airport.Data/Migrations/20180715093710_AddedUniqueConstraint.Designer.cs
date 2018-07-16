@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     [DbContext(typeof(AirportDbContext))]
-    [Migration("20180715093135_AddedRequiredAnnotations")]
-    partial class AddedRequiredAnnotations
+    [Migration("20180715093710_AddedUniqueConstraint")]
+    partial class AddedUniqueConstraint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,6 +109,9 @@ namespace Airport.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Number")
+                        .IsUnique();
+
                     b.ToTable("Flight");
                 });
 
@@ -171,6 +174,9 @@ namespace Airport.Api.Migrations
                     b.Property<int>("Seats");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Model")
+                        .IsUnique();
 
                     b.ToTable("PlaneType");
                 });

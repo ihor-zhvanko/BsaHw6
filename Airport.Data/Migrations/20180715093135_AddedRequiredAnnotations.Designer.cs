@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Airport.Api.Migrations
+namespace Airport.Data.Migrations
 {
     [DbContext(typeof(AirportDbContext))]
-    [Migration("20180715110842_ChangeServiceLifeToServiceLifeDays")]
-    partial class ChangeServiceLifeToServiceLifeDays
+    [Migration("20180715093135_AddedRequiredAnnotations")]
+    partial class AddedRequiredAnnotations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,9 +109,6 @@ namespace Airport.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Number")
-                        .IsUnique();
-
                     b.ToTable("Flight");
                 });
 
@@ -151,7 +148,7 @@ namespace Airport.Api.Migrations
 
                     b.Property<DateTime>("ReleaseDate");
 
-                    b.Property<long>("ServiceLifeDays");
+                    b.Property<TimeSpan>("ServiceLife");
 
                     b.HasKey("Id");
 
@@ -174,9 +171,6 @@ namespace Airport.Api.Migrations
                     b.Property<int>("Seats");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Model")
-                        .IsUnique();
 
                     b.ToTable("PlaneType");
                 });
