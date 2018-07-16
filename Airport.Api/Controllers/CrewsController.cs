@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using FluentValidation;
 
 using Airport.Common.Exceptions;
-
-using Airport.Api.Models;
-using Airport.Api.Validation;
+using Airport.Common.DTOs;
+using Airport.Common.InputModels;
 
 using Airport.BusinessLogic.Services;
-using Airport.BusinessLogic.Models;
 
 namespace Airport.Api.Controllers
 {

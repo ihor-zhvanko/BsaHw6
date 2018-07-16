@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+
 using FluentValidation;
 
 using Airport.Common.Exceptions;
-
-using Airport.Api.Validation;
+using Airport.Common.DTOs;
 
 using Airport.BusinessLogic.Services;
-using Airport.BusinessLogic.Models;
 
 namespace Airport.Api.Controllers
 {
@@ -19,11 +18,11 @@ namespace Airport.Api.Controllers
   public class PlaneTypesController : Controller
   {
     IPlaneTypeService _planeTypeService;
-    IValidator<PlaneTypeModel> _planeTypeModelValidator;
+    IValidator<PlaneTypeDTO> _planeTypeModelValidator;
 
     public PlaneTypesController(
       IPlaneTypeService planeTypeService,
-      IValidator<PlaneTypeModel> planeTypeModelValidator
+      IValidator<PlaneTypeDTO> planeTypeModelValidator
     )
     {
       _planeTypeService = planeTypeService;
@@ -45,7 +44,7 @@ namespace Airport.Api.Controllers
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody]PlaneTypeModel value)
+    public IActionResult Post([FromBody]PlaneTypeDTO value)
     {
       var validationResult = _planeTypeModelValidator.Validate(value);
       if (!validationResult.IsValid)
@@ -56,7 +55,7 @@ namespace Airport.Api.Controllers
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody]PlaneTypeModel value)
+    public IActionResult Put(int id, [FromBody]PlaneTypeDTO value)
     {
       var validationResult = _planeTypeModelValidator.Validate(value);
       if (!validationResult.IsValid)

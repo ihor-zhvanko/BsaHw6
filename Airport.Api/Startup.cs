@@ -12,18 +12,19 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 
-using Airport.Api.Validation;
-using Airport.Api.Models;
-using Airport.Api.Middleware;
+using Airport.Common.DTOs;
+using Airport.Common.InputModels;
+using Airport.Common.Mappers;
+using Airport.Common.Validation;
 
 using Airport.Data.MockData;
 using Airport.Data.UnitOfWork;
 using Airport.Data.DatabaseContext;
-
-using Airport.BusinessLogic.Mappers;
-using Airport.BusinessLogic.Services;
-using Airport.BusinessLogic.Models;
 using Airport.Data.AirportInitializer;
+
+using Airport.BusinessLogic.Services;
+
+using Airport.Api.Middleware;
 
 namespace Airport.Api
 {
@@ -50,14 +51,14 @@ namespace Airport.Api
 
       services.AddTransient<AirportInitializer>();
 
-      services.AddSingleton<IValidator<AirhostessModel>, AirhostessModelValidator>();
+      services.AddSingleton<IValidator<AirhostessDTO>, AirhostessDTOValidator>();
       services.AddSingleton<IValidator<CrewInputModel>, CrewInputModelValidator>();
-      services.AddSingleton<IValidator<DepartureModel>, DepartureModelValidator>();
-      services.AddSingleton<IValidator<FlightModel>, FlightModelValidator>();
-      services.AddSingleton<IValidator<PilotModel>, PilotModelValidator>();
-      services.AddSingleton<IValidator<PlaneModel>, PlaneModelValidator>();
-      services.AddSingleton<IValidator<PlaneTypeModel>, PlaneTypeModelValidator>();
-      services.AddSingleton<IValidator<TicketModel>, TicketModelValidator>();
+      services.AddSingleton<IValidator<DepartureDTO>, DepartureDTOValidator>();
+      services.AddSingleton<IValidator<FlightDTO>, FlightDTOValidator>();
+      services.AddSingleton<IValidator<PilotDTO>, PilotDTOValidator>();
+      services.AddSingleton<IValidator<PlaneDTO>, PlaneDTOValidator>();
+      services.AddSingleton<IValidator<PlaneTypeDTO>, PlaneTypeDTOValidator>();
+      services.AddSingleton<IValidator<TicketDTO>, TicketDTOValidator>();
 
       services.AddScoped<IUnitOfWork, UnitOfWork>();
 

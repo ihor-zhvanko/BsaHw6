@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
 
 using Airport.Common.Exceptions;
+using Airport.Common.DTOs;
 
 using Airport.BusinessLogic.Services;
-using Airport.BusinessLogic.Models;
 
 namespace Airport.Api.Controllers
 {
@@ -18,11 +18,11 @@ namespace Airport.Api.Controllers
   public class AirhostessesController : Controller
   {
     IAirhostessService _airhostessesService;
-    IValidator<AirhostessModel> _airhostessValidator;
+    IValidator<AirhostessDTO> _airhostessValidator;
 
     public AirhostessesController(
       IAirhostessService airhostessesService,
-      IValidator<AirhostessModel> airhostessValidator
+      IValidator<AirhostessDTO> airhostessValidator
     )
     {
       _airhostessesService = airhostessesService;
@@ -47,7 +47,7 @@ namespace Airport.Api.Controllers
 
     // POST api/values
     [HttpPost]
-    public IActionResult Post([FromBody]AirhostessModel value)
+    public IActionResult Post([FromBody]AirhostessDTO value)
     {
       var validationResult = _airhostessValidator.Validate(value);
       if (!validationResult.IsValid)
@@ -59,7 +59,7 @@ namespace Airport.Api.Controllers
 
     // PUT api/values/5
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody]AirhostessModel value)
+    public IActionResult Put(int id, [FromBody]AirhostessDTO value)
     {
       var validationResult = _airhostessValidator.Validate(value);
       if (!validationResult.IsValid)
