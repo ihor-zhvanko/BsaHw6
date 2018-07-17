@@ -37,6 +37,22 @@ namespace Airport.Data.AirportInitializer
       _dbContext.Database.CommitTransaction();
     }
 
+    public async Task AntiSeed()
+    {
+      await _dbContext.Database.BeginTransactionAsync();
+
+      await AntiSeed<Ticket>();
+      await AntiSeed<Departure>();
+      await AntiSeed<Flight>();
+      await AntiSeed<Plane>();
+      await AntiSeed<PlaneType>();
+      await AntiSeed<Airhostess>();
+      await AntiSeed<Crew>();
+      await AntiSeed<Pilot>();
+
+      _dbContext.Database.CommitTransaction();
+    }
+
     public async Task Seed<TEntity>() where TEntity : class
     {
       var dbSet = _dbContext.Set<TEntity>();
@@ -51,6 +67,19 @@ namespace Airport.Data.AirportInitializer
         await _dbContext.SaveChangesAsync();
 
         await IdentityInsert<TEntity>(false);
+      }
+    }
+
+    public async Task AntiSeed<TEntity>() where TEntity : class
+    {
+      var dbSet = _dbContext.Set<TEntity>();
+      if (await dbSet.AnyAsync())
+      {
+        Console.WriteLine($"Anti seeding {typeof(TEntity).Name} table . . .");
+        var query = $"DELETE FROM {typeof(TEntity).Name}";
+
+        await _dbContext.Database.ExecuteSqlCommandAsync(query);
+        await Reseed<TEntity>();
       }
     }
 
