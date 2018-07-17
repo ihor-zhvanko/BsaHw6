@@ -5,7 +5,7 @@ using Airport.Data.Models;
 
 namespace Airport.Data.UnitOfWork
 {
-  public interface IUnitOfWork
+  public interface IUnitOfWork : IDisposable
   {
     IAirhostessRepository AirhostessRepository { get; }
     ICrewRepository CrewRepository { get; }

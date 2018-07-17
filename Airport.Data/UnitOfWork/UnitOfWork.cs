@@ -9,7 +9,7 @@ using Airport.Data.DatabaseContext;
 
 namespace Airport.Data.UnitOfWork
 {
-  public class UnitOfWork : IUnitOfWork
+  public class UnitOfWork : IUnitOfWork, IDisposable
   {
     protected readonly AirportDbContext _dbContext;
     public IAirhostessRepository AirhostessRepository { get; }
@@ -92,6 +92,11 @@ namespace Airport.Data.UnitOfWork
       }
 
       throw new NotImplementedException($"No repository for: {entityType.Name}");
+    }
+
+    public void Dispose()
+    {
+      _dbContext.Dispose();
     }
   }
 }

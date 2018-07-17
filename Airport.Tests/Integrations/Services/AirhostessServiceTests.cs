@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using FakeItEasy;
 using FluentValidation;
@@ -32,14 +33,20 @@ namespace Airport.Tests.Integrations.Services
       var validValidationResult = new ValidationResult();
       A.CallTo(() => AlwaysValidValidator.Validate(A<AirhostessDTO>._)).Returns(validValidationResult);
 
+      ServicesTestsSetup.AirportInitializer.Seed().Wait();
+    }
 
+    [TearDown]
+    public void TearDown()
+    {
+      ServicesTestsSetup.AirportInitializer.AntiSeed().Wait();
     }
 
     [Test]
     public void Create_When_entity_is_created_Then_new_airhostess_with_new_id_is_returned()
     {
       // Arrange
-
+      var entities = ServicesTestsSetup.AirportDbContext.Airhostess.ToList();
     }
   }
 }
