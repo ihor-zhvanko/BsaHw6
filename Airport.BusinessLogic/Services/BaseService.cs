@@ -37,7 +37,6 @@ namespace Airport.BusinessLogic.Services
       entity = _unitOfWork.Set<TEntity>().Create(entity);
       _unitOfWork.SaveChanges();
 
-      entity.Id = 0;
       return Mapper.Map<TDTO>(entity);
     }
 
