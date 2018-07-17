@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using AutoMapper;
+using FluentValidation;
 
 using Airport.Common.Exceptions;
 using Airport.Common.DTOs;
@@ -19,15 +20,10 @@ namespace Airport.BusinessLogic.Services
 
   public class TicketService : BaseService<TicketDTO, Ticket>, ITicketService
   {
-    IFlightService _flightService;
     public TicketService(
-      IUnitOfWork unitOfWork,
-      IFlightService flightService
-    )
-      : base(unitOfWork)
-    {
-      _flightService = flightService;
-    }
+      IUnitOfWork unitOfWork, IValidator<TicketDTO> ticketDTOValidator
+    ) : base(unitOfWork, ticketDTOValidator)
+    { }
 
     public IList<TicketDetailsDTO> GetAllDetails()
     {

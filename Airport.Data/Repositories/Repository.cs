@@ -26,13 +26,13 @@ namespace Airport.Data.Repositories
       return _dbContext.Set<TEntity>();
     }
 
-    public virtual TEntity Create(TEntity entity, string createdBy = null)
+    public virtual TEntity Create(TEntity entity)
     {
       _dbContext.Set<TEntity>().Add(entity);
       return entity;
     }
 
-    public virtual TEntity Update(TEntity entity, string modifiedBy = null)
+    public virtual TEntity Update(TEntity entity)
     {
       _dbContext.Update(entity);
       return entity;

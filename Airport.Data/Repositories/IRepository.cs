@@ -8,9 +8,9 @@ namespace Airport.Data.Repositories
   {
     IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null);
 
-    TEntity Create(TEntity entity, string createdBy = null);
+    TEntity Create(TEntity entity);
 
-    TEntity Update(TEntity entity, string modifiedBy = null);
+    TEntity Update(TEntity entity);
 
     void Delete(TEntity entity);
 

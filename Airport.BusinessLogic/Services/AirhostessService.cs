@@ -8,6 +8,7 @@ using Airport.Data.Models;
 using Airport.Data.UnitOfWork;
 
 using AutoMapper;
+using FluentValidation;
 
 namespace Airport.BusinessLogic.Services
 {
@@ -19,8 +20,8 @@ namespace Airport.BusinessLogic.Services
 
   public class AirhostessService : BaseService<AirhostessDTO, Airhostess>, IAirhostessService
   {
-    public AirhostessService(IUnitOfWork unitOfWork)
-      : base(unitOfWork)
+    public AirhostessService(IUnitOfWork unitOfWork, IValidator<AirhostessDTO> airhostessDTOValidator)
+      : base(unitOfWork, airhostessDTOValidator)
     { }
 
     public IList<AirhostessDTO> GetByCrewId(int crewId)

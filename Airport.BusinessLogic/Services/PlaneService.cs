@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using AutoMapper;
+using FluentValidation;
 
 using Airport.Common.Exceptions;
 using Airport.Common.DTOs;
@@ -20,15 +21,9 @@ namespace Airport.BusinessLogic.Services
 
   public class PlaneService : BaseService<PlaneDTO, Plane>, IPlaneService
   {
-    IPlaneTypeService _planeTypeService;
-    public PlaneService(
-      IUnitOfWork unitOfWork,
-      IPlaneTypeService planeTypeService
-      )
-      : base(unitOfWork)
-    {
-      _planeTypeService = planeTypeService;
-    }
+    public PlaneService(IUnitOfWork unitOfWork, IValidator<PlaneDTO> planeDTOValidator)
+      : base(unitOfWork, planeDTOValidator)
+    { }
 
     public IList<PlaneDetailsDTO> GetAllDetails()
     {

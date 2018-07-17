@@ -12,10 +12,36 @@ namespace Airport.Data.UnitOfWork
   public class UnitOfWork : IUnitOfWork
   {
     protected readonly AirportDbContext _dbContext;
+    public IAirhostessRepository AirhostessRepository { get; }
+    public ICrewRepository CrewRepository { get; }
+    public IDepartureRepository DepartureRepository { get; }
+    public IFlightRepository FlightRepository { get; }
+    public IPilotRepository PilotRepository { get; }
+    public IPlaneRepository PlaneRepository { get; }
+    public IPlaneTypeRepository PlaneTypeRepository { get; }
+    public ITicketRepository TicketRepository { get; }
 
-    public UnitOfWork(AirportDbContext dbContext)
+    public UnitOfWork(
+      AirportDbContext dbContext,
+      IAirhostessRepository airhostessRepository,
+      ICrewRepository crewRepository,
+      IDepartureRepository departureRepository,
+      IFlightRepository flightRepository,
+      IPilotRepository pilotRepository,
+      IPlaneRepository planeRepository,
+      IPlaneTypeRepository planeTypeRepository,
+      ITicketRepository ticketRepository
+    )
     {
       _dbContext = dbContext;
+      AirhostessRepository = airhostessRepository;
+      CrewRepository = crewRepository;
+      DepartureRepository = departureRepository;
+      FlightRepository = flightRepository;
+      PilotRepository = pilotRepository;
+      PlaneRepository = planeRepository;
+      PlaneTypeRepository = planeTypeRepository;
+      TicketRepository = ticketRepository;
     }
 
     public int SaveChanges()
@@ -31,37 +57,38 @@ namespace Airport.Data.UnitOfWork
     public IRepository<TEntity> Set<TEntity>() where TEntity : Entity
     {
       var entityType = typeof(TEntity);
+
       if (entityType == typeof(Airhostess))
       {
-        return (IRepository<TEntity>)new AirhostessRepository(_dbContext);
+        return (IRepository<TEntity>)AirhostessRepository;
       }
       else if (entityType == typeof(Crew))
       {
-        return (IRepository<TEntity>)new CrewRepository(_dbContext);
+        return (IRepository<TEntity>)CrewRepository;
       }
       else if (entityType == typeof(Departure))
       {
-        return (IRepository<TEntity>)new DepartureRepository(_dbContext);
+        return (IRepository<TEntity>)DepartureRepository;
       }
       else if (entityType == typeof(Flight))
       {
-        return (IRepository<TEntity>)new FlightRepository(_dbContext);
+        return (IRepository<TEntity>)FlightRepository;
       }
       else if (entityType == typeof(Pilot))
       {
-        return (IRepository<TEntity>)new PilotRepository(_dbContext);
+        return (IRepository<TEntity>)PilotRepository;
       }
       else if (entityType == typeof(Plane))
       {
-        return (IRepository<TEntity>)new PlaneRepository(_dbContext);
+        return (IRepository<TEntity>)PlaneRepository;
       }
       else if (entityType == typeof(PlaneType))
       {
-        return (IRepository<TEntity>)new PlaneTypeRepository(_dbContext);
+        return (IRepository<TEntity>)PlaneTypeRepository;
       }
       else if (entityType == typeof(Ticket))
       {
-        return (IRepository<TEntity>)new TicketRepository(_dbContext);
+        return (IRepository<TEntity>)TicketRepository;
       }
 
       throw new NotImplementedException($"No repository for: {entityType.Name}");

@@ -21,6 +21,7 @@ using Airport.Data.MockData;
 using Airport.Data.UnitOfWork;
 using Airport.Data.DatabaseContext;
 using Airport.Data.AirportInitializer;
+using Airport.Data.Repositories;
 
 using Airport.BusinessLogic.Services;
 
@@ -59,6 +60,15 @@ namespace Airport.Api
       services.AddSingleton<IValidator<PlaneDTO>, PlaneDTOValidator>();
       services.AddSingleton<IValidator<PlaneTypeDTO>, PlaneTypeDTOValidator>();
       services.AddSingleton<IValidator<TicketDTO>, TicketDTOValidator>();
+
+      services.AddScoped<IAirhostessRepository, AirhostessRepository>();
+      services.AddScoped<ICrewRepository, CrewRepository>();
+      services.AddScoped<IDepartureRepository, DepartureRepository>();
+      services.AddScoped<IFlightRepository, FlightRepository>();
+      services.AddScoped<IPilotRepository, PilotRepository>();
+      services.AddScoped<IPlaneRepository, PlaneRepository>();
+      services.AddScoped<IPlaneTypeRepository, PlaneTypeRepository>();
+      services.AddScoped<ITicketRepository, TicketRepository>();
 
       services.AddScoped<IUnitOfWork, UnitOfWork>();
 

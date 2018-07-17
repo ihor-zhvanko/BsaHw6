@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Airport.Data.UnitOfWork;
 using Airport.Data.Models;
 using AutoMapper;
+using FluentValidation;
 
 using Airport.Common.Exceptions;
 
@@ -11,18 +12,32 @@ namespace Airport.BusinessLogic.Services
   public class BaseService<TDTO, TEntity> : IService<TDTO> where TEntity : Entity
   {
     protected IUnitOfWork _unitOfWork;
+    protected IValidator<TDTO> _dtoValidator;
 
-    public BaseService(IUnitOfWork unitOfWork)
+    public BaseService(IUnitOfWork unitOfWork, IValidator<TDTO> dtoValidator)
     {
       _unitOfWork = unitOfWork;
+      _dtoValidator = dtoValidator;
+    }
+
+    protected void EnsureValid(TDTO model)
+    {
+      var validationResult = _dtoValidator.Validate(model);
+      if (!validationResult.IsValid)
+      {
+        throw new BadRequestException(validationResult.Errors);
+      }
     }
 
     public TDTO Create(TDTO model)
     {
+      EnsureValid(model);
+
       var entity = Mapper.Map<TEntity>(model);
       entity = _unitOfWork.Set<TEntity>().Create(entity);
       _unitOfWork.SaveChanges();
 
+      entity.Id = 0;
       return Mapper.Map<TDTO>(entity);
     }
 
@@ -56,6 +71,8 @@ namespace Airport.BusinessLogic.Services
 
     public virtual TDTO Update(TDTO model)
     {
+      EnsureValid(model);
+
       var entity = Mapper.Map<TEntity>(model);
       entity = _unitOfWork.Set<TEntity>().Update(entity);
       _unitOfWork.SaveChanges();

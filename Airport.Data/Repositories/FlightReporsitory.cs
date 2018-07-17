@@ -10,7 +10,12 @@ using Airport.Data.DatabaseContext;
 
 namespace Airport.Data.Repositories
 {
-  public class FlightRepository : Repository<Flight>, IRepository<Flight>
+  public interface IFlightRepository : IRepository<Flight>
+  {
+
+  }
+
+  public class FlightRepository : Repository<Flight>, IFlightRepository
   {
     private AirportDbContext _dbContext;
     public FlightRepository(AirportDbContext dbContext) : base(dbContext)

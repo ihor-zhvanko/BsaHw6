@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
+using FluentValidation;
 
 using Airport.Common.DTOs;
 
@@ -14,8 +15,8 @@ namespace Airport.BusinessLogic.Services
 
   public class FlightService : BaseService<FlightDTO, Flight>, IFlightService
   {
-    public FlightService(IUnitOfWork unitOfWork)
-      : base(unitOfWork)
+    public FlightService(IUnitOfWork unitOfWork, IValidator<FlightDTO> flightDTOValidator)
+      : base(unitOfWork, flightDTOValidator)
     { }
   }
 }

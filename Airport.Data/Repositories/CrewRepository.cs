@@ -10,7 +10,12 @@ using Airport.Data.DatabaseContext;
 
 namespace Airport.Data.Repositories
 {
-  public class CrewRepository : Repository<Crew>, IRepository<Crew>
+  public interface ICrewRepository : IRepository<Crew>
+  {
+
+  }
+
+  public class CrewRepository : Repository<Crew>, ICrewRepository
   {
     private AirportDbContext _dbContext;
     public CrewRepository(AirportDbContext dbContext) : base(dbContext)
