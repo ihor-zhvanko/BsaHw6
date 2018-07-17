@@ -45,8 +45,9 @@ namespace Airport.Data.Repositories
 
     public virtual void Delete(int id)
     {
-      var entity = _dbContext.Set<TEntity>().Where(x => x.Id == id);
-      _dbContext.RemoveRange(entity);
+      var entity = _dbContext.Set<TEntity>().FirstOrDefault(x => x.Id == id);
+      if (entity != null)
+        _dbContext.Remove(entity);
     }
 
     public virtual TEntity Get(int id)
