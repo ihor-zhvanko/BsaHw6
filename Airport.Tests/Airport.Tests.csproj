@@ -4,7 +4,19 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
   </PropertyGroup>
+
+  <Target Name="CopyTestSeed" AfterTargets="AfterBuild">
+    <Copy SourceFiles="Seed\Airhostess.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Crew.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Departure.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Flight.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Pilot.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Plane.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\PlaneType.json" DestinationFolder="$(OutDir)\Seed" />
+    <Copy SourceFiles="Seed\Ticket.json" DestinationFolder="$(OutDir)\Seed" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="4.7.1" />
@@ -20,5 +32,7 @@
     <ProjectReference Include="..\Airport.BusinessLogic\Airport.BusinessLogic.csproj" />
     <ProjectReference Include="..\Airport.Data\Airport.Data.csproj" />
   </ItemGroup>
+
+  
 
 </Project>

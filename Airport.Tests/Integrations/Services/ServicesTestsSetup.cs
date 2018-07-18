@@ -16,18 +16,8 @@ namespace Airport.Tests.Integrations.Services
   [SetUpFixture]
   public class ServicesTestsSetup
   {
-    public static IUnitOfWork UnitOfWork { get; private set; }
-    public static AirportDbContext AirportDbContext { get; private set; }
-    public static AirportInitializer AirportInitializer { get; private set; }
-
-    [OneTimeSetUp]
-    public void GlobalSetup()
+    public static IUnitOfWork GetUnitOfWork(AirportDbContext airportDbContext)
     {
-      MapperConfig.InitMappers();
-
-      var options = new DbContextOptionsBuilder(new DbContextOptions<AirportDbContext>());
-      options.UseSqlServer("Server=.\\SQLEXPRESS;Database=AirportDevelopmentTests;Trusted_Connection=True;", b => b.MigrationsAssembly("Airport.Data"));
-      var airportDbContext = new AirportDbContext(options.Options as DbContextOptions<AirportDbContext>);
       var airhostessRepository = new AirhostessRepository(airportDbContext);
       var crewRepository = new CrewRepository(airportDbContext);
       var departureRepository = new DepartureRepository(airportDbContext);
@@ -37,7 +27,7 @@ namespace Airport.Tests.Integrations.Services
       var planeTypeRepository = new PlaneTypeRepository(airportDbContext);
       var ticketRepository = new TicketRepository(airportDbContext);
 
-      UnitOfWork = new UnitOfWork(
+      var unitOfWork = new UnitOfWork(
         airportDbContext,
         airhostessRepository,
         crewRepository,
@@ -48,19 +38,42 @@ namespace Airport.Tests.Integrations.Services
         planeTypeRepository,
         ticketRepository
       );
-      AirportDbContext = airportDbContext;
-      var directory = Directory.GetCurrentDirectory();
-      var parent = Directory.GetParent(directory);
-      var subDirs = Directory.GetDirectories(parent.FullName);
 
-      AirportInitializer = new AirportInitializer(airportDbContext, new DataSource());
-      AirportDbContext.Database.Migrate();
+      return unitOfWork;
+    }
+
+    public static AirportDbContext GetAirportDbContext()
+    {
+      var options = new DbContextOptionsBuilder(new DbContextOptions<AirportDbContext>());
+      options.UseSqlServer(ConnectionString).EnableSensitiveDataLogging();
+      return new AirportDbContext(options.Options as DbContextOptions<AirportDbContext>);
+    }
+
+    public static AirportInitializer GetAirportInitializer(AirportDbContext airportDbContext)
+    {
+      return new AirportInitializer(airportDbContext, new DataSource());
+    }
+
+    protected static string ConnectionString => "Server=.\\SQLEXPRESS;Database=AirportDevelopmentTests;Trusted_Connection=True;";
+
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
+      MapperConfig.InitMappers();
+
+      // Migrate database if needed
+      var optionsBuilder = new DbContextOptionsBuilder(new DbContextOptions<AirportDbContext>());
+      optionsBuilder.UseSqlServer(ConnectionString, b => b.MigrationsAssembly("Airport.Data"));
+      var options = optionsBuilder.Options as DbContextOptions<AirportDbContext>;
+      using (var airportDbContext = new AirportDbContext(options))
+      {
+        airportDbContext.Database.Migrate();
+      }
     }
 
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
-      UnitOfWork.Dispose();
       Mapper.Reset();
     }
   }
