@@ -54,21 +54,13 @@ namespace Airport.Api
 
       services.AddSingleton<IValidator<AirhostessDTO>, AirhostessDTOValidator>();
       services.AddSingleton<IValidator<CrewInputModel>, CrewInputModelValidator>();
+      services.AddSingleton<IValidator<CrewDTO>, CrewDTOValidator>();
       services.AddSingleton<IValidator<DepartureDTO>, DepartureDTOValidator>();
       services.AddSingleton<IValidator<FlightDTO>, FlightDTOValidator>();
       services.AddSingleton<IValidator<PilotDTO>, PilotDTOValidator>();
       services.AddSingleton<IValidator<PlaneDTO>, PlaneDTOValidator>();
       services.AddSingleton<IValidator<PlaneTypeDTO>, PlaneTypeDTOValidator>();
       services.AddSingleton<IValidator<TicketDTO>, TicketDTOValidator>();
-
-      services.AddScoped<IAirhostessRepository, AirhostessRepository>();
-      services.AddScoped<ICrewRepository, CrewRepository>();
-      services.AddScoped<IDepartureRepository, DepartureRepository>();
-      services.AddScoped<IFlightRepository, FlightRepository>();
-      services.AddScoped<IPilotRepository, PilotRepository>();
-      services.AddScoped<IPlaneRepository, PlaneRepository>();
-      services.AddScoped<IPlaneTypeRepository, PlaneTypeRepository>();
-      services.AddScoped<ITicketRepository, TicketRepository>();
 
       services.AddScoped<IUnitOfWork, UnitOfWork>();
 

@@ -18,27 +18,7 @@ namespace Airport.Tests.Integrations.Services
   {
     public static IUnitOfWork GetUnitOfWork(AirportDbContext airportDbContext)
     {
-      var airhostessRepository = new AirhostessRepository(airportDbContext);
-      var crewRepository = new CrewRepository(airportDbContext);
-      var departureRepository = new DepartureRepository(airportDbContext);
-      var flightRepository = new FlightRepository(airportDbContext);
-      var pilotRepository = new PilotRepository(airportDbContext);
-      var planeRepository = new PlaneRepository(airportDbContext);
-      var planeTypeRepository = new PlaneTypeRepository(airportDbContext);
-      var ticketRepository = new TicketRepository(airportDbContext);
-
-      var unitOfWork = new UnitOfWork(
-        airportDbContext,
-        airhostessRepository,
-        crewRepository,
-        departureRepository,
-        flightRepository,
-        pilotRepository,
-        planeRepository,
-        planeTypeRepository,
-        ticketRepository
-      );
-
+      var unitOfWork = new UnitOfWork(airportDbContext);
       return unitOfWork;
     }
 
