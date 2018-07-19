@@ -16,6 +16,8 @@
     <Copy SourceFiles="Seed\Plane.json" DestinationFolder="$(OutDir)\Seed" />
     <Copy SourceFiles="Seed\PlaneType.json" DestinationFolder="$(OutDir)\Seed" />
     <Copy SourceFiles="Seed\Ticket.json" DestinationFolder="$(OutDir)\Seed" />
+
+    <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)\Seed" />
   </Target>
 
   <ItemGroup>

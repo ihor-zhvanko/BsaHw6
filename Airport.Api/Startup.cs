@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using FluentValidation;
 
 using Airport.Common.DTOs;
@@ -84,10 +85,18 @@ namespace Airport.Api
         app.UseDeveloperExceptionPage();
       }
 
+      if (env.IsEnvironment("Testing"))
+      {
+
+      }
+
       app.UseErrorHandlingMiddleware();
       app.UseMvc();
 
-      airportInitializer.Seed().Wait();
+      if (!env.IsEnvironment("Testing"))
+      {
+        airportInitializer.Seed().Wait();
+      }
     }
   }
 }

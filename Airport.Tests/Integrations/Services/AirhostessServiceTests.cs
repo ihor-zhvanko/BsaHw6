@@ -1,11 +1,14 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using FakeItEasy;
 using FluentValidation;
 using FluentValidation.Results;
 using AutoMapper;
+
+using Airport.Api;
 
 using Airport.Common.DTOs;
 using Airport.Common.Exceptions;
@@ -222,5 +225,6 @@ namespace Airport.Tests.Integrations.Services
         Assert.AreEqual(beforeUpdate.CrewId, afterUpdate.CrewId);
       }
     }
+
   }
 }

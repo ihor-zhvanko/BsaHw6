@@ -8,6 +8,10 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <Target Name="CopyConfigs" AfterTargets="AfterBuild">
+    <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)" />
+  </Target>
+
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="7.6.104" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
